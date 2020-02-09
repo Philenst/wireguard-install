@@ -427,6 +427,7 @@ function install-wireguard-server() {
     apt-get install raspberrypi-kernel-headers -y
     apt-get install wireguard qrencode haveged -y
   elif [ "$DISTRO" == "Arch" ]; then
+    pacman -Syu
     pacman -Syu --noconfirm linux-headers
     pacman -Syu --noconfirm haveged qrencode iptables
     pacman -Syu --noconfirm wireguard-tools wireguard-arch
