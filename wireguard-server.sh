@@ -396,6 +396,7 @@ function client-name() {
     read -p "Client name: " -e CLIENT_NAME
   fi
 }
+
   # Client Name
   client-name
 
