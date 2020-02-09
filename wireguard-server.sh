@@ -813,14 +813,12 @@ PublicKey = $SERVER_PUBKEY" >"/etc/wireguard/clients"/"$NEW_CLIENT_NAME"-$WIREGU
       rm -rf /etc/wireguard
       # Removing Wireguard User Config Files
       rm -rf /etc/wireguard/clients
-      # Removing Unbound Files
-      rm -rf /etc/unbound
-      # Removing Qrencode
-      rm -rf /etc/qrencode
       # Removing system wireguard config
       rm -f /etc/sysctl.d/wireguard.conf
       # Removing wireguard config
       rm -f /etc/wireguard/$WIREGUARD_PUB_NIC.conf
+      # Removing Unbound Files
+      rm -rf /etc/unbound
       # Removing Unbound Config
       rm -f /etc/unbound/unbound.conf
       # Removing Haveged Config
