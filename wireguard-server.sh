@@ -595,7 +595,7 @@ function install-wireguard-server() {
     sed -i "s|search|#search|" /etc/resolv.conf
     # Set localhost as the DNS resolver
     echo "nameserver 127.0.0.1" >> /etc/resolv.conf
-    # Use -i to enable modifications
+    # Disable modifications
     chattr +i /etc/resolv.conf
     # Restart unbound
   if pgrep systemd-journal; then
@@ -830,7 +830,7 @@ PublicKey = $SERVER_PUBKEY" >"/etc/wireguard/clients"/"$NEW_CLIENT_NAME"-$WIREGU
       # Going back to the old nameservers
       sed -i "s|#nameserver|nameserver|" /etc/resolv.conf
       sed -i "s|#search|search|" /etc/resolv.conf
-      # Use -i to enable modifications
+      # Disable modifications
       chattr +i /etc/resolv.conf
     fi
       ;;
