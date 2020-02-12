@@ -4,7 +4,7 @@
 # Debugging Enabled
 function debugging-check() {
   if [ "$DEBUGGING" == "y" ]; then
-    bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-server.log
+    bash -x /etc/wireguard/wireguard-client.sh >> /etc/wireguard/wireguard-client.log
   fi
 }
 
