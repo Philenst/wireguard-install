@@ -114,4 +114,4 @@ function install-wireguard-client() {
   }
 
   # WireGuard Client
-  install-wireguard-client
+  install-wireguard-client 2>&1 | tee /etc/wireguard/wireguard-client.log
