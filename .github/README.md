@@ -65,7 +65,6 @@ In your `/etc/wireguard/clients` directory, you will have `.conf` files. These a
 ### Compatibility
 | OS              | Supported          | i386               | amd64              | armhf              | arm64              |
 | --------------  | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
-| Amazon Linux    |:white_check_mark:  |:x:                 |:white_check_mark:  |:x:                 |:x:                 |
 | Ubuntu 16.04    |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
 | Ubuntu 18.04    |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
 | Ubuntu 19.04    |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
