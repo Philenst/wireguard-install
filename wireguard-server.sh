@@ -31,16 +31,12 @@ virt-check
 
 # Detect Operating System
 function dist-check() {
-  if [ -e /etc/centos-release ]; then
-    DISTRO="CentOS"
-  elif [ -e /etc/debian_version ]; then
-    DISTRO=$(lsb_release -is)
-  elif [ -e /etc/arch-release ]; then
-    DISTRO="Arch"
-  elif [ -e /etc/fedora-release ]; then
-    DISTRO="Fedora"
-  elif [ -e /etc/redhat-release ]; then
-    DISTRO="Redhat"
+  if [ -e /etc/os-release ]; then
+    # shellcheck disable=SC1091
+    source /etc/os-release
+    DISTRO=$ID
+    # shellcheck disable=SC2034
+    VERSION=$VERSION_ID
   else
     echo "Your distribution is not supported (yet)."
     exit
@@ -403,21 +399,27 @@ function client-name() {
   # Install WireGuard Server
 function install-wireguard-server() {
   # Installation begins here.
-  if [ "$DISTRO" == "Ubuntu" ]; then
+  if [ "$DISTRO" == "ubuntu" ] && [ "$VERSION" == "19.10" ]; then
+    apt-get update
+    apt-get install linux-headers-"$(uname -r)" -y
+    apt-get install wireguard qrencode haveged -y
+  else
     apt-get update
     apt-get install software-properties-common -y
     add-apt-repository ppa:wireguard/wireguard -y
     apt-get update
     apt-get install linux-headers-"$(uname -r)" -y
     apt-get install wireguard qrencode haveged -y
-  elif [ "$DISTRO" == "Debian" ]; then
+  fi
+  if [ "$DISTRO" == "debian" ]; then
     apt-get update
     echo "deb http://deb.debian.org/debian/ unstable main" >/etc/apt/sources.list.d/unstable.list
     printf 'Package: *\nPin: release a=unstable\nPin-Priority: 90\n' >/etc/apt/preferences.d/limit-unstable
     apt-get update
     apt-get install linux-headers-"$(uname -r)" -y
     apt-get install wireguard qrencode haveged -y
-  elif [ "$DISTRO" == "Raspbian" ]; then
+  fi
+  if [ "$DISTRO" == "raspbian" ]; then
     apt-get update
     apt-get install dirmngr -y
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC
@@ -426,24 +428,49 @@ function install-wireguard-server() {
     apt-get update
     apt-get install raspberrypi-kernel-headers -y
     apt-get install wireguard qrencode haveged -y
-  elif [ "$DISTRO" == "Arch" ]; then
+  fi
+  if [ "$DISTRO" == "arch" ]; then
     pacman -Syu
     pacman -Syu --noconfirm linux-headers
     pacman -Syu --noconfirm haveged qrencode iptables
     pacman -Syu --noconfirm wireguard-tools wireguard-arch
-  elif [ "$DISTRO" = 'Fedora' ]; then
+  fi
+  if [ "$DISTRO" = 'fedora' ] && [ "$VERSION" == "32" ]; then
+    dnf update -y
+    dnf install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
+    dnf install qrencode wireguard-tools haveged -y
+  else
     dnf update -y
     dnf copr enable jdoss/wireguard -y
     dnf install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
     dnf install qrencode wireguard-dkms wireguard-tools haveged -y
-  elif [ "$DISTRO" == "CentOS" ]; then
+  fi
+  if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "8" ]; then
+    yum update -y
+    yum install epel-release -y
+    yum update -y
+    yum install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
+    yum config-manager --set-enabled PowerTools
+    yum copr enable jdoss/wireguard
+    yum install wireguard-dkms wireguard-tools qrencode haveged -y
+  else
     yum update -y
     wget -O /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
     yum update -y
     yum install epel-release -y
+    yum update -y
     yum install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
     yum install wireguard-dkms wireguard-tools qrencode haveged -y
-  elif [ "$DISTRO" == "Redhat" ]; then
+  fi
+  if [ "$DISTRO" == "redhat" ] && [ "$VERSION" == "8" ]; then
+    yum update -y
+    yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    yum update -y
+    # shellcheck disable=SC2046
+    subscription-manager repos --enable codeready-builder-for-rhel-8-$(arch)-rpms
+    yum copr enable jdoss/wireguard
+    yum install wireguard-dkms wireguard-tools qrencode haveged -y
+  else
     yum update -y
     wget -O /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
     yum update -y
@@ -460,7 +487,7 @@ function install-wireguard-server() {
   function install-unbound() {
   if [ "$INSTALL_UNBOUND" = "y" ]; then
   # Installation Begins Here
-  if [ "$DISTRO" == "Ubuntu" ]; then
+  if [ "$DISTRO" == "ubuntu" ]; then
     # Install Unbound
     apt-get install unbound unbound-host e2fsprogs resolvconf -y
     # Set Config
@@ -489,9 +516,14 @@ function install-wireguard-server() {
     qname-minimisation: yes
     prefetch-key: yes' >/etc/unbound/unbound.conf
     # Apply settings
+  if pgrep systemd-journal; then
     systemctl stop systemd-resolved
     systemctl disable systemd-resolved
-  elif [ "$DISTRO" == "Debian" ]; then
+  else
+    service systemd-resolved stop
+    service systemd-resolved disable
+  fi
+  elif [ "$DISTRO" == "debian" ]; then
     # Install Unbound
     apt-get install unbound unbound-host e2fsprogs resolvconf -y
     # Set Config
@@ -519,7 +551,7 @@ function install-wireguard-server() {
     prefetch: yes
     qname-minimisation: yes
     prefetch-key: yes' >/etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "Raspbian" ]; then
+  elif [ "$DISTRO" == "raspbian" ]; then
     # Install Unbound
     apt-get install unbound unbound-host e2fsprogs resolvconf -y
     # Set Config
@@ -547,7 +579,7 @@ function install-wireguard-server() {
     prefetch: yes
     qname-minimisation: yes
     prefetch-key: yes' >/etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "CentOS" ]; then
+  elif [ "$DISTRO" == "centos" ]; then
     # Install Unbound
     yum install unbound unbound-libs resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
@@ -556,7 +588,7 @@ function install-wireguard-server() {
     sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
     sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
     sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "Fedora" ]; then
+  elif [ "$DISTRO" == "fedora" ]; then
     dnf install unbound unbound-host resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
     sed -i 's|# access-control: 127.0.0.0/8 allow|access-control: 10.8.0.1/24 allow|' /etc/unbound/unbound.conf
@@ -564,7 +596,7 @@ function install-wireguard-server() {
     sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
     sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
     sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "Arch" ]; then
+  elif [ "$DISTRO" == "arch" ]; then
     pacman -Syu --noconfirm unbound resolvconf
     mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
     echo 'server:
@@ -789,23 +821,23 @@ PublicKey = $SERVER_PUBKEY" >"/etc/wireguard/clients"/"$NEW_CLIENT_NAME"-$WIREGU
     if [ "$REMOVE_WIREGUARD" = "y" ]; then
       # Stop WireGuard
       wg-quick down $WIREGUARD_PUB_NIC
-      if [ "$DISTRO" == "CentOS" ]; then
+      if [ "$DISTRO" == "centos" ]; then
         yum remove wireguard qrencode haveged unbound unbound-host -y
-      elif [ "$DISTRO" == "Debian" ]; then
+      elif [ "$DISTRO" == "debian" ]; then
         apt-get remove --purge wireguard qrencode haveged unbound unbound-host -y
         sed -i 's|deb http://deb.debian.org/debian/ unstable main||' /etc/apt/sources.list.d/unstable.list
-      elif [ "$DISTRO" == "Ubuntu" ]; then
+      elif [ "$DISTRO" == "ubuntu" ]; then
         apt-get remove --purge wireguard qrencode haveged unbound unbound-host -y
-      elif [ "$DISTRO" == "Raspbian" ]; then
+      elif [ "$DISTRO" == "raspbian" ]; then
         apt-key del 04EE7237B7D453EC
         apt-get remove --purge wireguard qrencode haveged unbound unbound-host dirmngr -y
         sed -i 's|deb http://deb.debian.org/debian/ unstable main||' /etc/apt/sources.list.d/unstable.list
-      elif [ "$DISTRO" == "Arch" ]; then
+      elif [ "$DISTRO" == "arch" ]; then
         pacman -Rs wireguard qrencode haveged unbound unbound-host -y
-      elif [ "$DISTRO" == "Fedora" ]; then
+      elif [ "$DISTRO" == "fedora" ]; then
         dnf remove wireguard qrencode haveged unbound unbound-host -y
         rm /etc/yum.repos.d/wireguard.repo
-      elif [ "$DISTRO" == "Redhat" ]; then
+      elif [ "$DISTRO" == "redhat" ]; then
         yum remove wireguard qrencode haveged unbound unbound-host -y
         rm /etc/yum.repos.d/wireguard.repo
       fi

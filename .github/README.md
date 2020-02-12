@@ -4,20 +4,21 @@
 [![GitHub issues](https://img.shields.io/github/issues/complexorganizations/wireguard-install)](https://github.com/complexorganizations/wireguard-install/issues)
 [![GitHub contributors](https://img.shields.io/github/contributors/complexorganizations/wireguard-install)](https://github.com/complexorganizations/wireguard-install/graphs/contributors)
 
-
 ### Prerequisite 
 - CentOS, Debian, Ubuntu, Arch, Fedora, Redhat, Raspbian
 - Linux Kernel 4.1 or newer
 - You will need root access, or a user account with `sudo` privilege.
 
-### Server Installation
+### Installation
+
+***Server Installation***
 ```
 wget https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/wireguard-server.sh -P /etc/wireguard/
 bash /etc/wireguard/wireguard-server.sh
 ```
 The first time you run it, you'll have to follow the assistant and answer a few questions to setup your VPN server.
 
-### Client Installation
+***Client Installation***
 ```
 wget https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/wireguard-client.sh -P /etc/wireguard/
 bash /etc/wireguard/wireguard-client.sh
@@ -124,9 +125,15 @@ Use a browser based development environment:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/complexorganizations/wireguard-install)
 
-***Debugging***
+***Debugging Server***
 ```
-bash -x /etc/wireguard/wireguard-[server,client].sh >> /etc/wireguard/wireguard.log
+wget https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/wireguard-server.sh -P /etc/wireguard/
+bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-server.log
+```
+***Debugging Client***
+```
+wget https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/wireguard-client.sh -P /etc/wireguard/
+bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-client.log
 ```
 ___
 ### Credits & Licence
