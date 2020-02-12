@@ -17,10 +17,14 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
-**Debugging**
+**Server Debugging**
 ```
-cd /etc/wireguard/
-bash -x ./wireguard-server.sh
+bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-server.log
+```
+
+**Client Debugging**
+```
+bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-client.log
 ```
 
 **Expected behavior**
