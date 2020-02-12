@@ -1,7 +1,7 @@
 #!/bin/bash
 # Secure WireGuard For CentOS, Debian, Ubuntu, Arch, Fedora, Redhat, Raspbian
 
-# Check Root Function
+# Function to check for root.
 function root-check() {
   if [ "$EUID" -ne 0 ]; then
     echo "You need to run this script as root."
@@ -9,7 +9,7 @@ function root-check() {
   fi
 }
 
-# Root Check
+# Check for root
 root-check
 
 # Checking For Virtualization
@@ -47,6 +47,7 @@ function dist-check() {
 dist-check
 
 # Headless Install
+# Skips all questions and just get a client conf after install.
 function headless-install() {
   if [ "$HEADLESS_INSTALL" == "y" ]; then
     # Set default choices so that no questions will be asked.
