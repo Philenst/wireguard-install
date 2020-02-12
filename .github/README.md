@@ -124,9 +124,9 @@ Use a browser based development environment:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/complexorganizations/wireguard-install)
 
-**Debugging**
+***Debugging***
 ```
-bash -x /etc/wireguard/wireguard-[server,client].sh
+bash -x /etc/wireguard/wireguard-[server,client].sh >> /etc/wireguard/wireguard.log
 ```
 ___
 ### Credits & Licence
