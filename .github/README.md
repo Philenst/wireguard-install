@@ -123,10 +123,7 @@ Is there an WireGuard documentation?
 - Yes, please head to the [WireGuard Manual](https://www.wireguard.com), which references all the options.
 
 How do i install wireguard without the questions? (Headless Install) ***Server Only***
-- `HEADLESS_INSTALL=y ./etc/wireguard/wireguard-server.sh`
-
-How do i debug the script? ***Client|Server***
-- `DEBUGGING=y ./etc/wireguard/wireguard-(client|server).sh`
+- ```HEADLESS_INSTALL=y /etc/wireguard/wireguard-server.sh```
 ---
 ### Developing
 Use a browser based development environment:
