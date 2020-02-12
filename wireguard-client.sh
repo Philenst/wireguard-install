@@ -1,6 +1,16 @@
 #!/bin/bash
 # Secure WireGuard For CentOS, Debian, Ubuntu, Arch, Fedora, Redhat, Raspbian
 
+# Debugging Enabled
+function debugging-check() {
+  if [ "$DEBUGGING" == "y" ]; then
+    bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-server.log
+  fi
+}
+
+# Enabled Debugging
+debugging-check
+
 # Check Root Function
 function root-check() {
   if [ "$EUID" -ne 0 ]; then
