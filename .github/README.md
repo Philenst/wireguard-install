@@ -78,7 +78,6 @@ In your `/etc/wireguard/clients` directory, you will have `.conf` files. These a
 | CentOS 6.x      |:x:                 |:x:                 |:x:                 |:x:                 |:x:                 |
 | CentOS 7.x      |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
 | CentOS 8.x      |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
-| CentOS 9.x      |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
 | Fedora          |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
 | RedHat 6.x      |:x:                 |:x:                 |:x:                 |:x:                 |:x:                 |
 | RedHat 7.x      |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |:white_check_mark:  |
