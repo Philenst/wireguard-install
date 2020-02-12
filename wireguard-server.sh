@@ -646,6 +646,7 @@ function install-wireguard-server() {
     systemctl enable unbound
     systemctl restart unbound
   else
+    service unbound enable
     service unbound restart
   fi
 fi
@@ -706,6 +707,7 @@ PublicKey = $SERVER_PUBKEY" >"/etc/wireguard/clients"/"$CLIENT_NAME"-$WIREGUARD_
       systemctl enable wg-quick@$WIREGUARD_PUB_NIC
       systemctl restart wg-quick@$WIREGUARD_PUB_NIC
     else
+      service wg-quick@$WIREGUARD_PUB_NIC enable
       service wg-quick@$WIREGUARD_PUB_NIC restart
     fi
   }
