@@ -124,6 +124,11 @@ Use a browser based development environment:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/complexorganizations/wireguard-install)
 
+**Debugging**
+```
+cd /etc/wireguard/
+bash -x ./wireguard-server.sh
+```
 ___
 ### Credits & Licence
 Many thanks to the [Contributors](https://github.com/complexorganizations/wireguard-install/graphs/contributors)
