@@ -131,7 +131,7 @@ How do i debug the script? ***Client|Server***
 ### Developing
 Use a browser based development environment:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/complexorganizations/wireguard-install)
+[![Open in Gitpod](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/complexorganizations/wireguard-install)
 
 ***Debugging Server***
 ```
