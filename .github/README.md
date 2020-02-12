@@ -121,6 +121,9 @@ Is there an WireGuard documentation?
 How do i install wireguard without the questions? (Headless Install)
 - `cd /etc/wireguard/` and than `HEADLESS_INSTALL=y ./wireguard-server.sh`
 
+How do i debug the script?
+- `cd /etc/wireguard/` and than `DEBUGGING=y ./wireguard-server.sh`
+
 ---
 ### Developing
 Use a browser based development environment:
