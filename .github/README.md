@@ -118,6 +118,9 @@ Which WireGuard client do you recommend?
 Is there an WireGuard documentation?
 - Yes, please head to the [WireGuard Manual](https://www.wireguard.com), which references all the options.
 
+How do i install wireguard without the questions? (Headless Install)
+- `cd /etc/wireguard/` and than `HEADLESS_INSTALL=y ./wireguard-server.sh`
+
 ---
 ### Developing
 Use a browser based development environment:
