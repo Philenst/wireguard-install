@@ -126,8 +126,7 @@ Use a browser based development environment:
 
 **Debugging**
 ```
-cd /etc/wireguard/
-bash -x ./wireguard-server.sh
+bash -x /etc/wireguard/wireguard-[server,client].sh
 ```
 ___
 ### Credits & Licence
