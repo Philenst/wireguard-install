@@ -901,4 +901,4 @@ PublicKey = $SERVER_PUBKEY" >"/etc/wireguard/clients"/"$NEW_CLIENT_NAME"-$WIREGU
 
   # Running Questions Command
   wireguard-next-questions
-fi 2>&1 | tee /etc/wireguard/wireguard-server.log
+fi
