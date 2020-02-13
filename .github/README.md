@@ -143,7 +143,8 @@ bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-client.lo
 ```
 ___
 ### Credits
-[@angristan](https://github.com/angristan)[@l-n-s](https://github.com/l-n-s) 
+[Angristan](https://raw.githubusercontent.com/angristan/wireguard-install/master/LICENSE)
+[l-n-s](https://raw.githubusercontent.com/l-n-s/wireguard-install/master/LICENSE) 
 
 ### License 
 This project is under the [General Public License](https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/.github/LICENSE)
