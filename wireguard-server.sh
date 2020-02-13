@@ -454,7 +454,7 @@ function install-wireguard-server() {
     yum update -y
     yum install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
     yum config-manager --set-enabled PowerTools
-    yum copr enable jdoss/wireguard
+    yum copr enable jdoss/wireguard -y
     yum install wireguard-dkms wireguard-tools qrencode haveged -y
   fi
   if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "7" ]; then
@@ -588,7 +588,7 @@ function install-wireguard-server() {
     prefetch-key: yes' >/etc/unbound/unbound.conf
   fi
   if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "8" ]; then
-    dnf install unbound unbound-libs resolvconf -y
+    dnf install unbound unbound-libs -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
     sed -i 's|# access-control: 127.0.0.0/8 allow|access-control: 10.8.0.1/24 allow|' /etc/unbound/unbound.conf
     sed -i 's|# interface: ::0$|interface: 127.0.0.1|' /etc/unbound/unbound.conf
