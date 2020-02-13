@@ -404,7 +404,8 @@ function install-wireguard-server() {
     apt-get update
     apt-get install linux-headers-"$(uname -r)" -y
     apt-get install wireguard qrencode haveged -y
-  else
+  fi
+  if [ "$DISTRO" == "ubuntu" ] && [ "$VERSION" == "18.04" ] && [ "$VERSION" == "16.04" ]; then
     apt-get update
     apt-get install software-properties-common -y
     add-apt-repository ppa:wireguard/wireguard -y
@@ -440,7 +441,8 @@ function install-wireguard-server() {
     dnf update -y
     dnf install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
     dnf install qrencode wireguard-tools haveged -y
-  else
+  fi
+  if [ "$DISTRO" = 'fedora' ] && [ "$VERSION" == "31" ] && [ "$VERSION" == "30" ]; then
     dnf update -y
     dnf copr enable jdoss/wireguard -y
     dnf install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
@@ -471,7 +473,8 @@ function install-wireguard-server() {
     subscription-manager repos --enable codeready-builder-for-rhel-8-$(arch)-rpms
     yum copr enable jdoss/wireguard
     yum install wireguard-dkms wireguard-tools qrencode haveged -y
-  else
+  fi
+  if [ "$DISTRO" == "redhat" ] && [ "$VERSION" == "7" ]; then
     yum update -y
     wget -O /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
     yum update -y
@@ -591,7 +594,8 @@ function install-wireguard-server() {
     sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
     sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
     sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
-  else
+  fi
+  if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "7" ]; then
     # Install Unbound
     yum install unbound unbound-libs resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
