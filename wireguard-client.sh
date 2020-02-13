@@ -86,7 +86,7 @@ function install-wireguard-client() {
     yum update -y
     yum install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
     yum config-manager --set-enabled PowerTools
-    yum copr enable jdoss/wireguard
+    yum copr enable jdoss/wireguard -y
     yum install wireguard-dkms wireguard-tools qrencode haveged resolvconf -y
   fi
   if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "7" ]; then
