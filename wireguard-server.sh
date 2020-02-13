@@ -524,7 +524,8 @@ function install-wireguard-server() {
     service systemd-resolved stop
     service systemd-resolved disable
   fi
-  elif [ "$DISTRO" == "debian" ]; then
+  fi
+  if [ "$DISTRO" == "debian" ]; then
     # Install Unbound
     apt-get install unbound unbound-host e2fsprogs resolvconf -y
     # Set Config
@@ -552,7 +553,8 @@ function install-wireguard-server() {
     prefetch: yes
     qname-minimisation: yes
     prefetch-key: yes' >/etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "raspbian" ]; then
+  fi
+  if [ "$DISTRO" == "raspbian" ]; then
     # Install Unbound
     apt-get install unbound unbound-host e2fsprogs resolvconf -y
     # Set Config
@@ -580,7 +582,16 @@ function install-wireguard-server() {
     prefetch: yes
     qname-minimisation: yes
     prefetch-key: yes' >/etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "centos" ]; then
+  fi
+  if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "8" ]; then
+    dnf install unbound unbound-libs resolvconf -y
+    sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
+    sed -i 's|# access-control: 127.0.0.0/8 allow|access-control: 10.8.0.1/24 allow|' /etc/unbound/unbound.conf
+    sed -i 's|# interface: ::0$|interface: 127.0.0.1|' /etc/unbound/unbound.conf
+    sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
+    sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
+    sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
+  else
     # Install Unbound
     yum install unbound unbound-libs resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
@@ -589,7 +600,8 @@ function install-wireguard-server() {
     sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
     sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
     sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "fedora" ]; then
+  fi
+  if [ "$DISTRO" == "fedora" ]; then
     dnf install unbound unbound-host resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
     sed -i 's|# access-control: 127.0.0.0/8 allow|access-control: 10.8.0.1/24 allow|' /etc/unbound/unbound.conf
@@ -597,7 +609,8 @@ function install-wireguard-server() {
     sed -i 's|# hide-identity: no|hide-identity: yes|' /etc/unbound/unbound.conf
     sed -i 's|# hide-version: no|hide-version: yes|' /etc/unbound/unbound.conf
     sed -i 's|use-caps-for-id: no|use-caps-for-id: yes|' /etc/unbound/unbound.conf
-  elif [ "$DISTRO" == "arch" ]; then
+  fi
+  if [ "$DISTRO" == "arch" ]; then
     pacman -Syu --noconfirm unbound resolvconf
     mv /etc/unbound/unbound.conf /etc/unbound/unbound.conf.old
     echo 'server:
