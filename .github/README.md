@@ -44,7 +44,8 @@ In your `/etc/wireguard/clients` directory, you will have `.conf` files. These a
 - Iptables rules and forwarding managed in a seamless way
 - If needed, the script can cleanly remove WireGuard, including configuration and iptables rules
 - Variety of DNS resolvers to be pushed to the clients
-- Choice to use a self-hosted resolver with Unbound (supports already existing Unbound installations)
+- Choice to use a self-hosted resolver with Unbound.
+- 
 - Block DNS leaks
 - Many other little things!
 
