@@ -456,7 +456,8 @@ function install-wireguard-server() {
     yum config-manager --set-enabled PowerTools
     yum copr enable jdoss/wireguard
     yum install wireguard-dkms wireguard-tools qrencode haveged -y
-  else
+  fi
+  if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "7" ]; then
     yum update -y
     wget -O /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
     yum update -y
