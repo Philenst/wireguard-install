@@ -102,7 +102,7 @@ In your `/etc/wireguard/clients` directory, you will have `.conf` files. These a
 | Rackspace       |:white_check_mark:  |
 | Scaleway        |:white_check_mark:  |
 | EuroVPS         |:white_check_mark:  |
-| Hetzner Cloud   |:x:                 |
+| Hetzner Cloud   |:white_check_mark:  |
 | Strato          |:x:                 |
 
 ---
