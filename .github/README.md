@@ -142,6 +142,8 @@ wget https://raw.githubusercontent.com/complexorganizations/wireguard-install/ma
 bash -x /etc/wireguard/wireguard-server.sh >> /etc/wireguard/wireguard-client.log
 ```
 ___
-### Credits & Licence
-Many thanks to the [Contributors](https://github.com/complexorganizations/wireguard-install/graphs/contributors)
+### Credits
+@angristan @l-n-s
+
+### License 
 This project is under the [General Public License](https://raw.githubusercontent.com/complexorganizations/wireguard-install/master/.github/LICENSE)
