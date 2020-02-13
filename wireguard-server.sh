@@ -588,7 +588,7 @@ function install-wireguard-server() {
     prefetch-key: yes' >/etc/unbound/unbound.conf
   fi
   if [ "$DISTRO" == "centos" ] && [ "$VERSION" == "8" ]; then
-    dnf install unbound unbound-libs -y
+    yum install unbound unbound-libs resolvconf -y
     sed -i 's|# interface: 0.0.0.0$|interface: 10.8.0.1|' /etc/unbound/unbound.conf
     sed -i 's|# access-control: 127.0.0.0/8 allow|access-control: 10.8.0.1/24 allow|' /etc/unbound/unbound.conf
     sed -i 's|# interface: ::0$|interface: 127.0.0.1|' /etc/unbound/unbound.conf
